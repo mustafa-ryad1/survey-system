@@ -51,6 +51,6 @@ app.use('/api/form',form_routes);
 
 // run app
 const port = 5050;
-app.listen(port,()=>{
-    console.log(`Server is running on port: ${port}`)
+app.listen(()=>{
+    console.log(`Server is running `)
 })
