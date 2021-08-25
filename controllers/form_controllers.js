@@ -6,7 +6,7 @@ const  { v4: uuidv4 } = require('uuid');
 
 const {getDirName} = require('../env');
 const User = require("../models/user_model");
-
+const base_url = "https://survey-system001.herokuapp.com"
 module.exports.createForm = async(req,res)=>{
     const form = new Form({form:req.body})
     await form.save()
@@ -88,7 +88,7 @@ module.exports.postFormData = async(req,res) => {
                         const filename = uuidv4() + ".png";
                         let image_path = getDirName + "/static/images/" + filename; 
                         fs.writeFileSync(image_path, buffer);
-                        let image_url = "http://127.0.0.1:5050/images/" + filename;
+                        let image_url = `${base_url}/images/` + filename;
                         values.push(image_url)
                     }else if(image.type.includes("video") && image.storage === "base64"){
                         let base64Data = image.url.replace(/^data:video\/mp4;base64,/, "");
@@ -96,7 +96,7 @@ module.exports.postFormData = async(req,res) => {
                         const filename = uuidv4() + ".mp4";
                         let video_path = getDirName + "/static/videos/" + filename; 
                         fs.writeFileSync(video_path, buffer);
-                        let video_url = "http://127.0.0.1:5050/videos/" + filename;
+                        let video_url = `${base_url}/videos/` + filename;
                         values.push(video_url)
                     }
                 }
