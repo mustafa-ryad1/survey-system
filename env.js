@@ -1,0 +1,1 @@
+module.exports.getDirName = __dirname;

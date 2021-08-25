@@ -1,0 +1,1 @@
+module.exports = {JWTSecret: "JWT_$Secret_key_@!"}
