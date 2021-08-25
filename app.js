@@ -51,6 +51,8 @@ app.use('/api/form',form_routes);
 
 // run app
 const port = 5050;
-app.listen(()=>{
-    console.log(`Server is running `)
-})
+
+const server = app.listen(process.env.PORT || 5000, () => {
+  const port = server.address().port;
+  console.log(`Express is working on port ${port}`);
+});
