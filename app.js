@@ -38,15 +38,15 @@ app.use('/api/user',user_routes);
 app.use('/api/form',form_routes);   
 
 // home page test
-// app.use(express.static(path.join(__dirname, '../frontend/build')));
+app.use(express.static(path.join(__dirname, '/build')));
 
-// app.get('/form/list', (req, res) => {
-//     res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
-//   });
+app.get('/form/list', (req, res) => {
+    res.sendFile(path.join(__dirname, '/build', 'index.html'));
+  });
 
-// app.get('/*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
-// });
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/build', 'index.html'));
+});
 
 
 // run app
