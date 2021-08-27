@@ -23,8 +23,9 @@ module.exports.getForm = async (req, res) => {
   let form = null;
   try{  
        form = await Form.findOne({'_id':req.params.id,'published':true})
+       console.log(form.form.components)
        form.form.components = form.form.components.filter(c=>{
-                                  if (c.users){
+                                  if (c.users && c.type !=='button'){
                                     // console.log(c.users);
                                     // console.log(c.users.includes('k'))
                                     return c.users.includes(req.user.username);
