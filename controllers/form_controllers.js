@@ -7,7 +7,9 @@ const  { v4: uuidv4 } = require('uuid');
 const {getDirName} = require('../env');
 const User = require("../models/user_model");
 // const base_url = "https://survey-system001.herokuapp.com"
-const base_url = "http://localhost:5000"
+// const base_url = "http://localhost:5000"
+const base_url = "http://surveysstem-env.eba-nppqihqt.us-east-1.elasticbeanstalk.com"
+
 module.exports.createForm = async(req,res)=>{
     const form = new Form({form:req.body})
     await form.save()
