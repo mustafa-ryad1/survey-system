@@ -15,7 +15,7 @@ module.exports.createForm = async(req,res)=>{
 }
 
 module.exports.getForms = async(req,res)=>{
-    const forms = await Form.find({}, 'form.title')
+    const forms = await Form.find({}, 'form.title published')
     res.status(200).send(forms)
 }
 
