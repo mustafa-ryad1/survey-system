@@ -6,7 +6,8 @@ const  { v4: uuidv4 } = require('uuid');
 
 const {getDirName} = require('../env');
 const User = require("../models/user_model");
-const base_url = "https://survey-system001.herokuapp.com"
+// const base_url = "https://survey-system001.herokuapp.com"
+const base_url = "http://localhost:5000"
 module.exports.createForm = async(req,res)=>{
     const form = new Form({form:req.body})
     await form.save()
@@ -14,7 +15,7 @@ module.exports.createForm = async(req,res)=>{
 }
 
 module.exports.getForms = async(req,res)=>{
-    const forms = await Form.find()
+    const forms = await Form.find({}, 'form.title')
     res.status(200).send(forms)
 }
 
@@ -117,7 +118,7 @@ module.exports.postFormData = async(req,res) => {
 }
 
 module.exports.getFormSubmissions = async(req,res)=>{
-    const submissions = await FormData.find({'form_id':req.params.form_id}).catch(err=>{
+    const submissions = await FormData.find({'form_id':req.params.form_id}, 'report_title').catch(err=>{
         res.status(404).send({sucess:false, message:"Form not found"})  
     })
     res.send({success:true,submissions})
@@ -163,7 +164,7 @@ module.exports.getFormsStatistics = async (req, res) => {
 };
 
 module.exports.getSubmissions = async(req,res) =>{
-  const submissions = await FormData.find()
+  const submissions = await FormData.find({}, 'report_title')
   res.status(200).send(submissions)
 }
 
@@ -179,7 +180,7 @@ module.exports.handlePublishForm = async(req,res)=>{
 }
 
 module.exports.getSurveys = async(req,res)=>{
-  const forms = await Form.find({'published':true})
+  const forms = await Form.find({'published':true}, 'form.title')
   res.status(200).send(forms)
 }
 
