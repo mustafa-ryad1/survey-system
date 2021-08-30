@@ -26,7 +26,7 @@ module.exports.getForm = async (req, res) => {
   let form = null;
   try{  
        form = await Form.findOne({'_id':req.params.id,'published':true})
-       console.log(form.form.components)
+      //  console.log(form.form.components)
        form.form.components = form.form.components.filter(c=>{
                                   if (c.users && c.type !=='button'){
                                     // console.log(c.users);
@@ -86,7 +86,7 @@ module.exports.postFormData = async(req,res) => {
             if(typeof data[item].value ==="object"){
                 let values = [];
                 for (let image of data[item].value){
-                    if(image.type.includes("image") && image.storage === "base64"){
+                    if(image?.type?.includes("image") && image?.storage === "base64"){
                         let base64Data = image.url.replace(/^data:image\/png;base64,/, "");
                         const buffer = Buffer.from(base64Data, "base64");
                         const filename = uuidv4() + ".png";
@@ -94,8 +94,8 @@ module.exports.postFormData = async(req,res) => {
                         fs.writeFileSync(image_path, buffer);
                         let image_url = `${base_url}/images/` + filename;
                         values.push(image_url)
-                    }else if(image.type.includes("video") && image.storage === "base64"){
-                        let base64Data = image.url.replace(/^data:video\/mp4;base64,/, "");
+                    }else if(typeof image ==="string" && image?.includes("video")){
+                        let base64Data = image.replace(/^video/, "");
                         const buffer = Buffer.from(base64Data, "base64");
                         const filename = uuidv4() + ".mp4";
                         let video_path = getDirName + "/static/videos/" + filename; 
