@@ -87,9 +87,22 @@ module.exports.postFormData = async(req,res) => {
                 let values = [];
                 for (let image of data[item].value){
                     if(image?.type?.includes("image") && image?.storage === "base64"){
-                        let base64Data = image.url.replace(/^data:image\/png;base64,/, "");
+                        let baseHeader = image.url.split(',')[0];
+                        let extension = 'jpg'
+                        switch(baseHeader){
+                          case "data:image/jpeg;base64":
+                            extension = "jpeg";
+                            break;
+                        case "data:image/png;base64":
+                            extension = "png";
+                            break;
+                        default://should write cases for more images types
+                            extension = "jpg";
+                            break;
+                        }
+                        let base64Data = image.url.split(',')[1];
                         const buffer = Buffer.from(base64Data, "base64");
-                        const filename = uuidv4() + ".png";
+                        const filename = uuidv4() + extension;
                         let image_path = getDirName + "/static/images/" + filename; 
                         fs.writeFileSync(image_path, buffer);
                         let image_url = `${base_url}/images/` + filename;
